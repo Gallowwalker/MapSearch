@@ -64,6 +64,14 @@ public class Node implements INode {
 		return this.y;
 	}
 	
+	public void setLinks(List<Link> links) {
+		this.links = links;
+	}
+	
+	public List<Link> getLinks() {
+		return this.links;
+	}
+	
 	public void setTested(boolean tested) {
 		this.tested = tested;
 	}

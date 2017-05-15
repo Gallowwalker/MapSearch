@@ -8,6 +8,8 @@ import javax.swing.UnsupportedLookAndFeelException;
 import gui.UserInterface;
 
 public class Main {
+	
+	private static UserInterface userInterface = null;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -18,12 +20,16 @@ public class Main {
                     exception.printStackTrace();
                 }
 				try {
-					new UserInterface();
+					userInterface = new UserInterface();
 				} catch (Exception exception) {
 					exception.printStackTrace();
 				}
 			}
 		});
+	}
+	
+	public static UserInterface getUserInterface() {
+		return userInterface;
 	}
 
 }

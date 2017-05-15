@@ -1,6 +1,18 @@
 package map;
 
+import javax.swing.JFrame;
+
+import main.Main;
+
 public class GraphUtil {
+	
+	public static void importMap() {
+		
+	}
+	
+	public static void saveMap() {
+		
+	}
 	
 	public static double calculatePathCost(byte linkType, double linkLength) {
 		double cost = 0.0d;
@@ -22,8 +34,15 @@ public class GraphUtil {
 				}
 				cost = linkLength * 2.0d;
 				break;
-			case 2: return 0.0d;
-			default: System.out.println("error"); // implement error dialog 
+			case 2:
+				return 0.0d;
+			default:
+				/*DialogProcessor dialogProcessor = new DialogProcessor();
+				Object[] dialogOptionButtons = {"Ok"};
+				dialogProcessor.showErrorDialog(new JFrame(), "Error", "Something went wrong when calculating the path cost.", dialogOptionButtons);
+				*/
+				Object[] dialogOptionButtons = {"Ok"};
+				Main.getUserInterface().getDialogProcessor().showErrorDialog(new JFrame(), "Error", "Something went wrong when calculating the path cost.", dialogOptionButtons);
 				break;
 		}
 		

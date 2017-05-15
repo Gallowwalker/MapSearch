@@ -18,6 +18,6 @@ public class DisplayArea extends JPanel {
 	protected void paintComponent(Graphics graphics) {
     	super.paintComponent(graphics);
     	this.setBackground(Color.WHITE);
-    	parent.getDialogProcessor().reDraw(this, graphics);
+    	//parent.getDialogProcessor().reDraw(this, graphics);
     }
 }
