@@ -9,12 +9,12 @@ public class Graph {
 	
 	private HashMap<String, Node> map = new HashMap<String, Node>();
 	
-	public void addNode(Node mapNode) {
-		if (mapNode == null) {
-			Object[] dialogOptionButtons = {"Ok"};
-			Main.getUserInterface().getDialogProcessor().showErrorDialog(new JFrame(), "Error", "Node is null.", dialogOptionButtons);
+	public boolean addNode(Node mapNode, boolean override) {
+		if (map.containsKey(mapNode.getNodeName())) { //mapNode == null
+			return true;
 		} else {
 			map.put(mapNode.getNodeName(), mapNode);
+			return false;
 		}
 	}
 	
@@ -23,8 +23,7 @@ public class Graph {
 			Link link = new Link(map.get(endNode), linkType, pathLength);
 			map.get(startNode).getLinks().add(link);
 		} else {
-			Object[] dialogOptionButtons = {"Ok"};
-			Main.getUserInterface().getDialogProcessor().showErrorDialog(new JFrame(), "Error", "Missing nodes.", dialogOptionButtons);
+			Main.getUserInterface().getDialogProcessor().showErrorDialog("Missing nodes.");
 		}
 	}
 	

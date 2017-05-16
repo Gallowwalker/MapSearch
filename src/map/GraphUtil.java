@@ -41,8 +41,7 @@ public class GraphUtil {
 				Object[] dialogOptionButtons = {"Ok"};
 				dialogProcessor.showErrorDialog(new JFrame(), "Error", "Something went wrong when calculating the path cost.", dialogOptionButtons);
 				*/
-				Object[] dialogOptionButtons = {"Ok"};
-				Main.getUserInterface().getDialogProcessor().showErrorDialog(new JFrame(), "Error", "Something went wrong when calculating the path cost.", dialogOptionButtons);
+				Main.getUserInterface().getDialogProcessor().showErrorDialog("Something went wrong when calculating the path cost.");
 				break;
 		}
 		

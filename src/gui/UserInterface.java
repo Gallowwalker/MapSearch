@@ -4,9 +4,13 @@ import javax.swing.JFrame;
 
 import processors.DialogProcessor;
 import javax.swing.JPanel;
+
+import map.Graph;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import java.awt.event.ActionListener;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 
 public class UserInterface {
@@ -20,6 +24,8 @@ public class UserInterface {
 	private JButton dijkstraSearchButton = null, greedySearchButton = null, customSearchButton = null;
 	private JButton resetButton = null, exitButton = null;
 	private JLabel optionsLabel = null, algoritmLabel = null, otherLabel = null;
+	
+	private Graph graph = new Graph();
 	
 	private DialogProcessor dialogProcessor = new DialogProcessor();
 	private DisplayArea displayArea = new DisplayArea(this);
@@ -56,6 +62,11 @@ public class UserInterface {
 		
 		addNodeButton = new JButton("Add Node");
 		addNodeButton.setBounds(10, 143, componentWidth, componentHeight);
+		addNodeButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				NodeUserInterface nodeInterface = new NodeUserInterface();
+			}
+		});
 		
 		addOneWayLinkButton = new JButton("One Way Link");
 		addOneWayLinkButton.setBounds(10, 176, componentWidth, componentHeight);
@@ -89,7 +100,8 @@ public class UserInterface {
 		exitButton.setBounds(10, 506, componentWidth, componentHeight);
 		exitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
-				mainWindow.dispose();
+				//mainWindow.dispose();
+				System.exit(0);
 			}
 		});
 		
@@ -117,6 +129,10 @@ public class UserInterface {
 		mainWindow.getContentPane().add(displayArea);
 		
 		mainWindow.setVisible(true);
+	}
+	
+	public Graph getGraph() {
+		return this.graph;
 	}
 	
 	public DialogProcessor getDialogProcessor() {
