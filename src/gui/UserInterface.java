@@ -20,7 +20,7 @@ public class UserInterface {
 	private JFrame mainWindow = null;
 	private JPanel buttonsPanel = null;
 	private JButton newMapButton = null, loadMapButton = null, saveMapButton = null;
-	private JButton addNodeButton = null, addOneWayLinkButton = null, addTwoWayLinkButton = null;
+	private JButton addNodeButton = null, addLinkButton = null;
 	private JButton dijkstraSearchButton = null, greedySearchButton = null, customSearchButton = null;
 	private JButton resetButton = null, exitButton = null;
 	private JLabel optionsLabel = null, algoritmLabel = null, otherLabel = null;
@@ -61,18 +61,20 @@ public class UserInterface {
 		saveMapButton.setBounds(10, 110, componentWidth, componentHeight);
 		
 		addNodeButton = new JButton("Add Node");
-		addNodeButton.setBounds(10, 143, componentWidth, componentHeight);
+		addNodeButton.setBounds(10, 176, componentWidth, componentHeight);
 		addNodeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				NodeUserInterface nodeInterface = new NodeUserInterface();
 			}
 		});
 		
-		addOneWayLinkButton = new JButton("One Way Link");
-		addOneWayLinkButton.setBounds(10, 176, componentWidth, componentHeight);
-		
-		addTwoWayLinkButton = new JButton("Two Way Link");
-		addTwoWayLinkButton.setBounds(10, 209, componentWidth, componentHeight);
+		addLinkButton = new JButton("Add Link");
+		addLinkButton.setBounds(10, 209, componentWidth, componentHeight);
+		addLinkButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				LinkUserInterface linkInterface = new LinkUserInterface();
+			}
+		});
 		
 		
 		algoritmLabel = new JLabel("Algoritms");
@@ -111,8 +113,7 @@ public class UserInterface {
 		buttonsPanel.add(loadMapButton);
 		buttonsPanel.add(saveMapButton);
 		buttonsPanel.add(addNodeButton);
-		buttonsPanel.add(addOneWayLinkButton);
-		buttonsPanel.add(addTwoWayLinkButton);
+		buttonsPanel.add(addLinkButton);
 		
 		buttonsPanel.add(algoritmLabel);
 		
