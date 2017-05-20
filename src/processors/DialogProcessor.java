@@ -14,14 +14,26 @@ public class DialogProcessor {
 	private Object[] informationDialogButtons = {"Ok"};
 	private Object[] warningDialogButtons = {"Yes", "No"};
 	
-	public void showErrorDialog(String dialogMessage) {
-		JOptionPane.showOptionDialog(dialogFrame, dialogMessage, errorDialogTitle, JOptionPane.OK_OPTION, JOptionPane.ERROR_MESSAGE, null, errorDialogButtons, errorDialogButtons[0]);
-		dialogFrame.dispose();
-	}
+	
 	
 	public void showInformationDialog(String dialogMessage) {
 		JOptionPane.showOptionDialog(dialogFrame, dialogMessage, informationDialogTitle, JOptionPane.OK_OPTION, JOptionPane.INFORMATION_MESSAGE, null, informationDialogButtons, informationDialogButtons[0]);
 		dialogFrame.dispose();
+	}
+	
+	public boolean showQuestionDialog(String dialogMessage) {
+		int choice = JOptionPane.showOptionDialog(dialogFrame, dialogMessage, warningDialogTitle, JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, warningDialogButtons, warningDialogButtons[0]);
+		switch (choice) {
+			case 0:
+				dialogFrame.dispose();
+				return true;
+			case 1:
+				dialogFrame.dispose();
+				return false;
+			default:
+				dialogFrame.dispose();
+				return false;
+		}
 	}
 	
 	public boolean showWarningDialog(String dialogMessage) {
@@ -37,6 +49,11 @@ public class DialogProcessor {
 				dialogFrame.dispose();
 				return false;
 		}
+	}
+	
+	public void showErrorDialog(String dialogMessage) {
+		JOptionPane.showOptionDialog(dialogFrame, dialogMessage, errorDialogTitle, JOptionPane.OK_OPTION, JOptionPane.ERROR_MESSAGE, null, errorDialogButtons, errorDialogButtons[0]);
+		dialogFrame.dispose();
 	}
 
 }

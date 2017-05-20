@@ -11,7 +11,7 @@ public class Node implements INode {
 	private List<Link> links = new ArrayList<>();
 	private boolean tested = false;
 	private boolean expanded = false;
-	private Node parentNode = null;
+	//private Node parentNode = null;
 	
 	public Node(String nodeName) {
 		this.nodeName = nodeName;
@@ -29,7 +29,7 @@ public class Node implements INode {
 		this.nodeWeight = 0.0d;
 		this.tested = false;
 		this.expanded = false;
-		this.parentNode = null;
+		//this.parentNode = null;
 	}
 	
 	public void setNodeName(String nodeName) {
@@ -87,7 +87,7 @@ public class Node implements INode {
 	public boolean isExpanded() {
 		return this.expanded;
 	}
-	
+	/*
 	public void setParentNode(Node parentNode) {
 		this.parentNode = parentNode;
 	}
@@ -95,5 +95,5 @@ public class Node implements INode {
 	public Node getParentNode() {
 		return this.parentNode;
 	}
-	
+	*/
 }
