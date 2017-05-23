@@ -6,12 +6,23 @@ import processors.DialogProcessor;
 import javax.swing.JPanel;
 
 import map.Graph;
+import map.GraphUtil;
+import map.Node;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
+
+import algorithms.GreedyByCoordinates;
 
 public class UserInterface {
 	
@@ -55,12 +66,46 @@ public class UserInterface {
 		
 		newMapButton = new JButton("New Map");
 		newMapButton.setBounds(10, 44, COMPONENT_WIDTH, COMPONENT_HEIGHT);
+		newMapButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				if (!graph.getMap().isEmpty()) {
+					graph.getMap().clear();
+					dialogProcessor.showInformationDialog("The map has been cleared.");
+				} else {
+					dialogProcessor.showInformationDialog("The map is already empty.");
+				}
+				//repaint
+			}
+		});
 		
 		loadMapButton = new JButton("Load Map");
 		loadMapButton.setBounds(10, 77, COMPONENT_WIDTH, COMPONENT_HEIGHT);
+		loadMapButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				JFileChooser fileChooser = new JFileChooser();
+				if (fileChooser.showOpenDialog(loadMapButton) == JFileChooser.APPROVE_OPTION) {
+					File file = fileChooser.getSelectedFile();
+					GraphUtil.loadMap(file);
+					//repaint
+				}
+			}
+		});
 		
 		saveMapButton = new JButton("Save Map");
 		saveMapButton.setBounds(10, 110, COMPONENT_WIDTH, COMPONENT_HEIGHT);
+		saveMapButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				JFileChooser fileChooser = new JFileChooser();
+				if (fileChooser.showSaveDialog(saveMapButton) == JFileChooser.APPROVE_OPTION) {
+					File file = fileChooser.getSelectedFile();
+					GraphUtil.saveMap(file);
+					//repaint
+				}
+			}
+		});
 		
 		
 		nodeOptionsLabel = new JLabel("Node Options");
@@ -71,6 +116,7 @@ public class UserInterface {
 		addNodeButton = new JButton("Add Node");
 		addNodeButton.setBounds(10, 176, COMPONENT_WIDTH, COMPONENT_HEIGHT);
 		addNodeButton.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent event) {
 				NodeUserInterface nodeInterface = new NodeUserInterface();
 			}
@@ -79,6 +125,7 @@ public class UserInterface {
 		editNodeButton = new JButton("Edit Node");
 		editNodeButton.setBounds(10, 209, COMPONENT_WIDTH, COMPONENT_HEIGHT);
 		editNodeButton.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent event) {
 				NodeUserInterface nodeInterface = new NodeUserInterface("Edit node", "editMode");
 			}
@@ -87,6 +134,7 @@ public class UserInterface {
 		deleteNodeButton = new JButton("Delete Node");
 		deleteNodeButton.setBounds(10, 242, COMPONENT_WIDTH, COMPONENT_HEIGHT);
 		deleteNodeButton.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent event) {
 				NodeUserInterface nodeInterface = new NodeUserInterface();
 			}
@@ -101,6 +149,7 @@ public class UserInterface {
 		addLinkButton = new JButton("Add Link");
 		addLinkButton.setBounds(10, 308, COMPONENT_WIDTH, COMPONENT_HEIGHT);
 		addLinkButton.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent event) {
 				LinkUserInterface linkInterface = new LinkUserInterface();
 			}
@@ -109,6 +158,7 @@ public class UserInterface {
 		editLinkButton = new JButton("Edit Link");
 		editLinkButton.setBounds(10, 341, COMPONENT_WIDTH, COMPONENT_HEIGHT);
 		editLinkButton.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent event) {
 				LinkUserInterface linkInterface = new LinkUserInterface("Edit link", "editMode");
 			}
@@ -117,6 +167,7 @@ public class UserInterface {
 		deleteLinkButton = new JButton("Delete Link");
 		deleteLinkButton.setBounds(10, 374, COMPONENT_WIDTH, COMPONENT_HEIGHT);
 		deleteLinkButton.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent event) {
 				LinkUserInterface linkInterface = new LinkUserInterface();
 			}
@@ -133,6 +184,17 @@ public class UserInterface {
 		
 		greedySearchButton = new JButton("Implement Greedy");
 		greedySearchButton.setBounds(10, 750, COMPONENT_WIDTH, COMPONENT_HEIGHT);
+		greedySearchButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				GreedyByCoordinates greedy = new GreedyByCoordinates();
+				if (greedy.hasPath("A", "D")) {
+					
+				} else {
+					dialogProcessor.showInformationDialog("No path has been found.");
+				}
+			}
+		});
 		
 		customSearchButton = new JButton("Implement Other");
 		customSearchButton.setBounds(10, 783, COMPONENT_WIDTH, COMPONENT_HEIGHT);
@@ -149,6 +211,7 @@ public class UserInterface {
 		exitButton = new JButton("Exit Program");
 		exitButton.setBounds(10, 882, COMPONENT_WIDTH, COMPONENT_HEIGHT);
 		exitButton.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent event) {
 				//mainWindow.dispose();
 				System.exit(0);

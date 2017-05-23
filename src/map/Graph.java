@@ -1,5 +1,6 @@
 package map;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -71,7 +72,6 @@ public class Graph {
 	 * @param linkLength How long is the link.
 	 * @return true or false
 	 */
-	
 	public boolean addTwoWayLink(String startNode, String endNode, byte linkType, double linkLength) {
 		boolean linkTest1 = addOneWayLink(startNode, endNode, linkType, linkLength);
 		boolean linkTest2 = addOneWayLink(endNode, startNode, linkType, linkLength);
@@ -82,23 +82,52 @@ public class Graph {
 		}
 	}
 	
+	/**
+	 * Checks if the starting and the destination node exists in the map, deletes the link between them and return true to indicate
+	 * that link is removed or false if not. Else returns false if one or both nodes doesn't exist.
+	 * @param startNode The node the link is starting from.
+	 * @param endNode endNode The node the link is pointing to.
+	 * @return true or false
+	 */
 	public boolean removeOneWayLink(String startNode, String endNode) {
-		List a = map.get(startNode).getLinks();
-		for (int i = 0; i < a.size(); i++) {
-			Link b = (Link) a.get(i);
-			Node c = b.getRelatedNode();
-			List d = map.get(c).getLinks();
-			for (int j = 0; j < d.size(); j++) {
-				Link e = (Link) d.get(i);
-				//check  get  specific nodes and  check their link array | remove link where end node is
-				//check if link exists
+		if (map.containsKey(startNode) && map.containsKey(endNode)) {
+			boolean isRemoved = false;
+			List<Link> startNodeLinks = new ArrayList<>();
+			startNodeLinks = map.get(startNode).getLinks();
+			
+			Link startSelectedLink = null;
+			Node startDestinationNode = null;
+			
+			for (int i = 0; i < startNodeLinks.size(); i++) {
+				startSelectedLink = startNodeLinks.get(i);
+				startDestinationNode = startSelectedLink.getRelatedNode();
+				if (startDestinationNode == map.get(endNode)) {
+					startNodeLinks.remove(i);
+					//startNodeLinks.remove(selectedLink);
+					isRemoved = true;
+					break;
+				}
 			}
+			return isRemoved;
+		} else {
+			return false;
 		}
-		return false;
 	}
 	
+	/**
+	 * Deletes bidirectional link between the two nodes and returns true if link is removed.
+	 * @param startNode The node the link is starting from.
+	 * @param endNode endNode The node the link is pointing to.
+	 * @return true or false
+	 */
 	public boolean removeTwoWayLink(String startNode, String endNode) {
-		return false;
+		boolean linkTest1 = removeOneWayLink(startNode, endNode);
+		boolean linkTest2 = removeOneWayLink(endNode, startNode);
+		if (linkTest1 && linkTest2) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
 	/**
