@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
+import javax.swing.JTextArea;
+
 import main.Main;
 import processors.DialogProcessor;
 
@@ -16,6 +18,24 @@ public class GraphUtil {
 	
 	private static Graph graph = Main.getUserInterface().getGraph();
 	private static DialogProcessor dialog = Main.getUserInterface().getDialogProcessor();
+	private static double finalPathLength = 0.0d;
+	private static double finalCost = 0.0d;
+	
+	public static void setFinalPathLength(double length) {
+		finalPathLength = length;
+	}
+	
+	public static double getFinalPathLength() {
+		return finalPathLength;
+	}
+	
+	public static void setFinalCost(double cost) {
+		finalCost = cost;
+	}
+	
+	public static double getFinalCost() {
+		return finalCost;
+	}
 	
 	public static void printMap() {
 		for (Node mapNode : graph.getMap().values()) {
@@ -119,7 +139,6 @@ public class GraphUtil {
 	
 	public static ArrayList<Node> sortQueueByWeight(ArrayList<Node> queue, Node node) {
 		boolean isNotAdded = true;
-
 		for (int i = 0; i < queue.size(); i++) {
 			if (node.getNodeWeight() < queue.get(i).getNodeWeight()) {
 				queue.add(i, node);
@@ -127,18 +146,68 @@ public class GraphUtil {
 				break;
 			}
 		}
-
 		if (isNotAdded) {
 			queue.add(node);
 		}
-
 		return queue;
-
 	}
 	
 	public static void calculateDistance(Node startNode, Node endNode) {
 		double result = Math.sqrt(Math.pow(startNode.getX() - endNode.getX(), 2) + Math.pow(startNode.getY() - endNode.getY(), 2));
 		startNode.setNodeWeight(result);
+	}
+	
+	public static void printPath(Node startNode, Node endNode, JTextArea textArea) {
+		if (!(endNode.getNodeName() == startNode.getNodeName())) {
+			textArea.append(endNode.getNodeName() + " <- ");
+			
+			//end node | parent node 
+			for (Link link : endNode.getParentNode().getLinks()) {
+				if (link.getRelatedNode() == endNode) {
+					finalPathLength += link.getLinkLength();
+				}
+			}
+			
+			finalCost += startNode.getCost() + endNode.getCost();
+			printPath(startNode, endNode.getParentNode(), textArea);
+		} else {
+			textArea.append(startNode.getNodeName() + " |" + "\n");
+			return;
+		}
+	}
+	
+	public static void printNodeInfo(Node node, JTextArea textArea) {
+		
+		String parentName = null;
+		double length = 0.0d;
+		if (node.getParentNode() == null) {
+			parentName = "No parent";
+		} else {
+			parentName = node.getParentNode().getNodeName();
+			for (Link link : node.getParentNode().getLinks()) {
+				if (link.getRelatedNode() == node) {
+					length = link.getLinkLength();
+				}
+			}
+		}
+		
+		textArea.append("Current node: " + node.getNodeName() + ", Length: " + length + "km. , Cost: " + node.getCost() + "lv. , Parent node: " + parentName + "\n");
+	}
+	
+	public static void setParentCost(Node parentNode, Link link) {
+		double newCost = 0.0d;
+		//double newCost = parentNode.getCost() + link.getLinkLength();
+		if (parentNode != null) {
+			 newCost = parentNode.getCost() + calculatePathCost(link.getLinkType(), link.getLinkLength());
+		} else {
+			newCost = 0.0d;
+		}
+		
+		Node relatedNode = link.getRelatedNode();
+		if (relatedNode.getParentNode() == null || relatedNode.getCost() > newCost) {
+			relatedNode.setParentNode(parentNode);
+			relatedNode.setCost(newCost);
+		}
 	}
 
 }

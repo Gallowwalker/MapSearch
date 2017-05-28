@@ -14,7 +14,10 @@ public class Node implements INode {
 	private List<Link> links = new ArrayList<>();
 	private boolean tested = false;
 	private boolean expanded = false;
-	//private Node parentNode = null;
+	private Node parentNode = null;
+	private double distance = 0.0d;
+	private double cost = 0.0d;
+	private int depth = 0;
 	
 	/**
 	 * Sets the parameters of the node.
@@ -22,6 +25,20 @@ public class Node implements INode {
 	 */
 	public Node(String nodeName) {
 		this.nodeName = nodeName;
+		this.parentNode = null;
+	}
+	
+	public Node(String nodeName, double nodeWeight) {
+		this.nodeName = nodeName;
+		this.nodeWeight = nodeWeight;
+		this.parentNode = null;
+	}
+	
+	public Node(String nodeName, int x, int y) {
+		this.nodeName = nodeName;
+		this.x = x;
+		this.y = y;
+		this.parentNode = null;
 	}
 	
 	/**
@@ -36,6 +53,7 @@ public class Node implements INode {
 		this.nodeWeight = nodeWeight;
 		this.x = x;
 		this.y = y;
+		this.parentNode = null;
 	}
 	
 	/**
@@ -46,7 +64,9 @@ public class Node implements INode {
 		this.nodeWeight = 0.0d;
 		this.tested = false;
 		this.expanded = false;
-		//this.parentNode = null;
+		this.parentNode = null;
+		this.depth = 0;
+		this.cost = 0.0d;
 	}
 	
 	/**
@@ -160,13 +180,45 @@ public class Node implements INode {
 	public boolean isExpanded() {
 		return this.expanded;
 	}
-	/*
+	
+	/**
+	 * Sets the parent node of the current node.
+	 * @param parentNode The parent node.
+	 */
 	public void setParentNode(Node parentNode) {
 		this.parentNode = parentNode;
 	}
 	
+	/**
+	 * Return the parent node of the current node.
+	 * @return Parent node.
+	 */
 	public Node getParentNode() {
 		return this.parentNode;
 	}
-	*/
+	
+	public void setDistance(double distance) {
+		this.distance = distance;
+	}
+	
+	public double getDistance() {
+		return this.distance;
+	}
+	
+	public void setCost(double cost) {
+		this.cost = cost;
+	}
+	
+	public double getCost() {
+		return this.cost;
+	}
+	
+	public void setDepth(int depth) {
+		this.depth = depth;
+	}
+	
+	public int getDepth() {
+		return this.depth;
+	}
+	
 }

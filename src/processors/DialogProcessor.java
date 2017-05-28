@@ -5,24 +5,24 @@ import javax.swing.JOptionPane;
 
 public class DialogProcessor {
 	
-	private String errorDialogTitle = "Error";
-	private String informationDialogTitle = "Information";
-	private String warningDialogTitle = "Warning";
-	
 	private JFrame dialogFrame = new JFrame();
-	private Object[] errorDialogButtons = {"Ok"};
-	private Object[] informationDialogButtons = {"Ok"};
-	private Object[] warningDialogButtons = {"Yes", "No"};
+	
+	private static final String ERROR_DIALOG_TITLE = "Error";
+	private static final String INFORMATION_DIALOG_TITLE = "Information";
+	private static final String WARNING_DIALOG_TITLE = "Warning";
+	private static final Object[] ERROR_DIALOG_BUTTONS = {"Ok"};
+	private static final Object[] INFORMATION_DIALOG_BUTTONS = {"Ok"};
+	private static final Object[] WARNING_DIALOG_BUTTONS = {"Yes", "No"};
 	
 	
 	
 	public void showInformationDialog(String dialogMessage) {
-		JOptionPane.showOptionDialog(dialogFrame, dialogMessage, informationDialogTitle, JOptionPane.OK_OPTION, JOptionPane.INFORMATION_MESSAGE, null, informationDialogButtons, informationDialogButtons[0]);
+		JOptionPane.showOptionDialog(dialogFrame, dialogMessage, INFORMATION_DIALOG_TITLE, JOptionPane.OK_OPTION, JOptionPane.INFORMATION_MESSAGE, null, INFORMATION_DIALOG_BUTTONS, INFORMATION_DIALOG_BUTTONS[0]);
 		dialogFrame.dispose();
 	}
 	
 	public boolean showQuestionDialog(String dialogMessage) {
-		int choice = JOptionPane.showOptionDialog(dialogFrame, dialogMessage, warningDialogTitle, JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, warningDialogButtons, warningDialogButtons[0]);
+		int choice = JOptionPane.showOptionDialog(dialogFrame, dialogMessage, WARNING_DIALOG_TITLE, JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, WARNING_DIALOG_BUTTONS, WARNING_DIALOG_BUTTONS[0]);
 		switch (choice) {
 			case 0:
 				dialogFrame.dispose();
@@ -37,7 +37,7 @@ public class DialogProcessor {
 	}
 	
 	public boolean showWarningDialog(String dialogMessage) {
-		int choice = JOptionPane.showOptionDialog(dialogFrame, dialogMessage, warningDialogTitle, JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, warningDialogButtons, warningDialogButtons[0]);
+		int choice = JOptionPane.showOptionDialog(dialogFrame, dialogMessage, WARNING_DIALOG_TITLE, JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, WARNING_DIALOG_BUTTONS, WARNING_DIALOG_BUTTONS[0]);
 		switch (choice) {
 			case 0:
 				dialogFrame.dispose();
@@ -52,7 +52,7 @@ public class DialogProcessor {
 	}
 	
 	public void showErrorDialog(String dialogMessage) {
-		JOptionPane.showOptionDialog(dialogFrame, dialogMessage, errorDialogTitle, JOptionPane.OK_OPTION, JOptionPane.ERROR_MESSAGE, null, errorDialogButtons, errorDialogButtons[0]);
+		JOptionPane.showOptionDialog(dialogFrame, dialogMessage, ERROR_DIALOG_TITLE, JOptionPane.OK_OPTION, JOptionPane.ERROR_MESSAGE, null, ERROR_DIALOG_BUTTONS, ERROR_DIALOG_BUTTONS[0]);
 		dialogFrame.dispose();
 	}
 

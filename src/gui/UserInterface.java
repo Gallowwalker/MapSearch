@@ -23,6 +23,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 
 import algorithms.GreedyByCoordinates;
+import algorithms.ShortestPathSearch;
 
 public class UserInterface {
 	
@@ -33,8 +34,7 @@ public class UserInterface {
 	private JButton newMapButton = null, loadMapButton = null, saveMapButton = null;
 	private JButton addNodeButton = null, editNodeButton = null, deleteNodeButton = null;
 	private JButton addLinkButton = null, editLinkButton = null, deleteLinkButton = null;
-	private JButton dijkstraSearchButton = null, greedySearchButton = null, customSearchButton = null;
-	private JButton resetButton = null, exitButton = null;
+	private JButton algorithmsButton = null, exitButton = null;
 	private JLabel mapOptionsLabel = null, nodeOptionsLabel = null, linkOptionsLabel = null, algoritmLabel = null, otherLabel = null;
 	
 	private Graph graph = new Graph();
@@ -136,7 +136,7 @@ public class UserInterface {
 		deleteNodeButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				NodeUserInterface nodeInterface = new NodeUserInterface();
+				DeleteNodeInterface nodeInterface = new DeleteNodeInterface();
 			}
 		});
 		
@@ -176,11 +176,23 @@ public class UserInterface {
 		
 		algoritmLabel = new JLabel("Algoritms");
 		algoritmLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		algoritmLabel.setBounds(10, 684, COMPONENT_WIDTH, COMPONENT_HEIGHT);
+		algoritmLabel.setBounds(10, 783, COMPONENT_WIDTH, COMPONENT_HEIGHT);
 		
-		
+		/*
 		dijkstraSearchButton = new JButton("Implement Dijkstra");
 		dijkstraSearchButton.setBounds(10, 717, COMPONENT_WIDTH, COMPONENT_HEIGHT);
+		dijkstraSearchButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				ShortestPathSearch dijkstra = new ShortestPathSearch();
+				if (dijkstra.hasPath("A", "F")) {
+					dialogProcessor.showInformationDialog("Path has been found.");
+				} else {
+					dialogProcessor.showInformationDialog("No path has been found.");
+				}
+				
+			}
+		});
 		
 		greedySearchButton = new JButton("Implement Greedy");
 		greedySearchButton.setBounds(10, 750, COMPONENT_WIDTH, COMPONENT_HEIGHT);
@@ -188,25 +200,28 @@ public class UserInterface {
 			@Override
 			public void actionPerformed(ActionEvent event) {
 				GreedyByCoordinates greedy = new GreedyByCoordinates();
-				if (greedy.hasPath("A", "D")) {
-					
+				if (greedy.hasPath("A", "F")) {
+					dialogProcessor.showInformationDialog("Path has been found.");
 				} else {
 					dialogProcessor.showInformationDialog("No path has been found.");
 				}
 			}
 		});
-		
-		customSearchButton = new JButton("Implement Other");
-		customSearchButton.setBounds(10, 783, COMPONENT_WIDTH, COMPONENT_HEIGHT);
+		*/
+		algorithmsButton = new JButton("Implement Search");
+		algorithmsButton.setBounds(10, 816, COMPONENT_WIDTH, COMPONENT_HEIGHT);
+		algorithmsButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				AlgorithmInterface algorithm = new AlgorithmInterface();
+			}
+		});
 		
 		
 		otherLabel = new JLabel("Other");
 		otherLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		otherLabel.setBounds(10, 816, COMPONENT_WIDTH, COMPONENT_HEIGHT);
+		otherLabel.setBounds(10, 849, COMPONENT_WIDTH, COMPONENT_HEIGHT);
 		
-		
-		resetButton = new JButton("Reset Search");
-		resetButton.setBounds(10, 849, COMPONENT_WIDTH, COMPONENT_HEIGHT);
 		
 		exitButton = new JButton("Exit Program");
 		exitButton.setBounds(10, 882, COMPONENT_WIDTH, COMPONENT_HEIGHT);
@@ -238,13 +253,13 @@ public class UserInterface {
 		
 		buttonsPanel.add(algoritmLabel);
 		
-		buttonsPanel.add(dijkstraSearchButton);
-		buttonsPanel.add(greedySearchButton);
-		buttonsPanel.add(customSearchButton);
+		//buttonsPanel.add(dijkstraSearchButton);
+		//buttonsPanel.add(greedySearchButton);
+		buttonsPanel.add(algorithmsButton);
 		
 		buttonsPanel.add(otherLabel);
 		
-		buttonsPanel.add(resetButton);
+		//buttonsPanel.add(resetButton);
 		buttonsPanel.add(exitButton);
 		
 		displayArea.setBounds(149, 0, 1525, 921);
