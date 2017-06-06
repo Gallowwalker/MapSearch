@@ -11,6 +11,7 @@ import java.util.Scanner;
 
 import javax.swing.JTextArea;
 
+import javafx.scene.control.TextArea;
 import main.Main;
 import processors.DialogProcessor;
 
@@ -169,6 +170,8 @@ public class GraphUtil {
 			}
 			
 			finalCost += startNode.getCost() + endNode.getCost();
+			//finalCost = endNode.getCost();
+			//finalPathLength = endNode.getDistance();
 			printPath(startNode, endNode.getParentNode(), textArea);
 		} else {
 			textArea.append(startNode.getNodeName() + " |" + "\n");
@@ -180,6 +183,7 @@ public class GraphUtil {
 		
 		String parentName = null;
 		double length = 0.0d;
+		byte type = 0;
 		if (node.getParentNode() == null) {
 			parentName = "No parent";
 		} else {
@@ -187,26 +191,73 @@ public class GraphUtil {
 			for (Link link : node.getParentNode().getLinks()) {
 				if (link.getRelatedNode() == node) {
 					length = link.getLinkLength();
+					type = link.getLinkType();
 				}
 			}
 		}
+		String typeName = "";
+		switch (type) {
+		case 0: typeName = "Highway(0)";
+		break;
+		case 1: typeName = "First Class(1)";
+		break;
+		case 2: typeName = "Second Class(2)";
+		break;
+		}
 		
-		textArea.append("Current node: " + node.getNodeName() + ", Length: " + length + "km. , Cost: " + node.getCost() + "lv. , Parent node: " + parentName + "\n");
+		textArea.append("Current node: " + node.getNodeName() + ", Length: " + length + "km. Type: " + typeName + " , Cost: " + node.getCost() + "lv. , Parent node: " + parentName + "\n");
 	}
 	
 	public static void setParentCost(Node parentNode, Link link) {
-		double newCost = 0.0d;
-		//double newCost = parentNode.getCost() + link.getLinkLength();
+		//double newCost = 0.0d;
+		double newCost = parentNode.getDistance() + link.getLinkLength();
 		if (parentNode != null) {
 			 newCost = parentNode.getCost() + calculatePathCost(link.getLinkType(), link.getLinkLength());
-		} else {
-			newCost = 0.0d;
 		}
 		
 		Node relatedNode = link.getRelatedNode();
 		if (relatedNode.getParentNode() == null || relatedNode.getCost() > newCost) {
 			relatedNode.setParentNode(parentNode);
 			relatedNode.setCost(newCost);
+		}
+	}
+	
+	public static void setParentCostAndPrice(Node parentNode, Link link) {
+		double newDistance = parentNode.getDistance() + link.getLinkLength() + parentNode.getNodeWeight();
+		double newCost = parentNode.getCost() + calculatePathCost(link.getLinkType(), link.getLinkLength());
+		Node rNode = link.getRelatedNode();
+		if (rNode.getParentNode() == null || rNode.getDistance() > newDistance) {
+			
+			rNode.setDistance(newDistance);
+			rNode.setParentNode(parentNode);
+			rNode.setCost(newCost);
+		}
+	}
+	
+	public static void setParentByPrice(Node parentNode, Link link) {
+		double newDistance = parentNode.getDistance() + link.getLinkLength() + parentNode.getNodeWeight();
+		double newCost = parentNode.getCost() + calculatePathCost(link.getLinkType(), link.getLinkLength());
+		Node rNode = link.getRelatedNode();
+		if (rNode.getParentNode() == null || rNode.getCost() > newCost) {
+			
+			rNode.setDistance(newDistance);
+			rNode.setParentNode(parentNode);
+			rNode.setCost(newCost);
+		}
+	}
+	
+	public static void printDistanceAndPrice(Graph graph, String end, JTextArea textArea) {
+		textArea.append("Path length: " + (graph.getNode(end).getDistance()) + "km.\n");
+		textArea.append("Final cost: " + graph.getNode(end).getCost() + "lv.");
+	}
+	
+	public static void printPath(Node stopNode, Node goalNode, ArrayList<String> path) {
+		if (!(goalNode.getNodeName() == stopNode.getNodeName())) {
+			path.add(goalNode.getNodeName());
+			printPath(stopNode, goalNode.getParentNode(), path);
+		} else {
+			path.add(stopNode.getNodeName());
+			return;
 		}
 	}
 

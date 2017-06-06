@@ -75,6 +75,7 @@ public class Graph {
 	public boolean addTwoWayLink(String startNode, String endNode, byte linkType, double linkLength) {
 		boolean linkTest1 = addOneWayLink(startNode, endNode, linkType, linkLength);
 		boolean linkTest2 = addOneWayLink(endNode, startNode, linkType, linkLength);
+		
 		if (linkTest1 || linkTest2) {
 			return true;
 		} else {

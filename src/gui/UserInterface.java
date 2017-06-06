@@ -214,6 +214,7 @@ public class UserInterface {
 			@Override
 			public void actionPerformed(ActionEvent event) {
 				AlgorithmInterface algorithm = new AlgorithmInterface();
+				GraphUtil.printMap();
 			}
 		});
 		
